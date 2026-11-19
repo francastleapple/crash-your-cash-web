@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crash your Cash — Quema tu dinero. Sube al ranking.</title>
+  <meta name="description" content="La app donde quemar dinero es un deporte. Destruye tus Chispas, sube al ranking y vacía tu cuenta con estilo. Próximamente en Android e iOS.">
+  <meta property="og:title" content="Crash your Cash">
+  <meta property="og:description" content="Quema tu dinero. Sube al ranking. Vacía tu cuenta con estilo.">
+  <meta property="og:image" content="https://crashyourcash.app/og-image.png">
+  <meta property="og:url" content="https://crashyourcash.app">
+  <link rel="icon" href="favicon.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --negro:   #0D0D12;
+      --oscuro:  #13131F;
+      --panel:   #1A1A2E;
+      --borde:   #2A2A45;
+      --oro:     #FFD700;
+      --oro2:    #FFA500;
+      --fuego:   #FF4500;
+      --fuego2:  #FF6B00;
+      --blanco:  #F0EDE6;
+      --gris:    #8888AA;
+      --pixel:   'Press Start 2P', monospace;
+      --texto:   'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--negro);
+      color: var(--blanco);
+      font-family: var(--texto);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(13,13,18,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--borde);
+    }
+    .nav-logo { font-family: var(--pixel); font-size: 0.65rem; color: var(--oro); letter-spacing: 1px; }
+    .nav-logo span { color: var(--fuego); }
+    .nav-cta {
+      background: var(--fuego); color: #fff; border: none; cursor: pointer;
+      padding: 0.55rem 1.2rem; font-family: var(--pixel); font-size: 0.5rem;
+      text-decoration: none; letter-spacing: 1px;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--fuego2); }
+
+    /* ── HERO ────────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 6rem 1.5rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 70%, rgba(255,69,0,0.15) 0%, transparent 70%);
+    }
+    .fire-particles { position: absolute; inset: 0; pointer-events: none; }
+    .particle {
+      position: absolute; bottom: 0; width: 4px; border-radius: 50%;
+      animation: rise linear infinite;
+      opacity: 0;
+    }
+    @keyframes rise {
+      0%   { transform: translateY(0) scale(1);   opacity: 0.8; }
+      100% { transform: translateY(-90vh) scale(0); opacity: 0; }
+    }
+
+    .badge {
+      display: inline-block; margin-bottom: 1.5rem;
+      background: rgba(255,69,0,0.15); border: 1px solid var(--fuego);
+      color: var(--fuego); padding: 0.4rem 1rem;
+      font-family: var(--pixel); font-size: 0.45rem; letter-spacing: 2px;
+    }
+    h1 {
+      font-family: var(--pixel); font-size: clamp(1.4rem, 5vw, 2.8rem);
+      line-height: 1.4; margin-bottom: 0.5rem; position: relative; z-index: 1;
+    }
+    h1 .crash { color: var(--blanco); }
+    h1 .your  { color: var(--oro); }
+    h1 .cash  { color: var(--fuego); }
+
+    .tagline {
+      font-size: clamp(1rem, 2.5vw, 1.25rem); color: var(--gris);
+      max-width: 540px; margin: 1.5rem auto 2.5rem; position: relative; z-index: 1;
+    }
+    .tagline strong { color: var(--blanco); }
+
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; position: relative; z-index: 1; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--fuego), var(--fuego2));
+      color: #fff; border: none; cursor: pointer;
+      padding: 1rem 2rem; font-family: var(--pixel); font-size: 0.6rem;
+      text-decoration: none; letter-spacing: 1px;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 0 24px rgba(255,69,0,0.4);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(255,69,0,0.6); }
+    .btn-secondary {
+      background: transparent; color: var(--oro);
+      border: 1px solid var(--oro);
+      padding: 1rem 2rem; font-family: var(--pixel); font-size: 0.6rem;
+      text-decoration: none; letter-spacing: 1px;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .btn-secondary:hover { background: rgba(255,215,0,0.1); }
+
+    .scroll-hint { margin-top: 3rem; color: var(--gris); font-size: 0.8rem; animation: bounce 2s infinite; }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+
+    /* ── STATS ───────────────────────────────────────────────── */
+    .stats {
+      background: var(--panel);
+      border-top: 1px solid var(--borde); border-bottom: 1px solid var(--borde);
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 0;
+    }
+    .stat {
+      flex: 1; min-width: 200px; padding: 2rem 1.5rem; text-align: center;
+      border-right: 1px solid var(--borde);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num { font-family: var(--pixel); font-size: 1.5rem; color: var(--oro); display: block; margin-bottom: 0.5rem; }
+    .stat-lbl { color: var(--gris); font-size: 0.85rem; }
+
+    /* ── SECCIONES GENÉRICAS ─────────────────────────────────── */
+    section { padding: 5rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--pixel); font-size: 0.5rem; color: var(--fuego);
+      letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1rem;
+    }
+    h2 { font-family: var(--pixel); font-size: clamp(1rem, 3vw, 1.6rem); line-height: 1.5; margin-bottom: 1rem; }
+    h2 .gold { color: var(--oro); }
+    h2 .fire { color: var(--fuego); }
+    .subtitle { color: var(--gris); max-width: 600px; margin-bottom: 3rem; }
+
+    /* ── CÓMO FUNCIONA ───────────────────────────────────────── */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+    .step {
+      background: var(--panel); border: 1px solid var(--borde);
+      padding: 2rem; position: relative; overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .step:hover { border-color: var(--fuego); }
+    .step-num {
+      font-family: var(--pixel); font-size: 2.5rem;
+      color: rgba(255,69,0,0.12); position: absolute; top: 0.5rem; right: 1rem;
+    }
+    .step-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .step h3 { font-family: var(--pixel); font-size: 0.6rem; color: var(--oro); margin-bottom: 0.75rem; line-height: 1.8; }
+    .step p { color: var(--gris); font-size: 0.9rem; }
+
+    /* ── RANKINGS ────────────────────────────────────────────── */
+    .rankings-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    @media(max-width:640px){ .rankings-wrap { grid-template-columns: 1fr; } }
+    .ranking-card {
+      background: var(--panel); border: 1px solid var(--borde); padding: 1.5rem;
+    }
+    .ranking-card.elite { border-color: var(--oro); }
+    .ranking-title { font-family: var(--pixel); font-size: 0.55rem; margin-bottom: 1.2rem; }
+    .ranking-title.virtual { color: var(--fuego); }
+    .ranking-title.elite   { color: var(--oro); }
+    .ranking-row {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.6rem 0; border-bottom: 1px solid var(--borde);
+      font-size: 0.9rem;
+    }
+    .ranking-row:last-child { border-bottom: none; }
+    .rank-pos { font-family: var(--pixel); font-size: 0.5rem; width: 28px; color: var(--gris); }
+    .rank-name { flex: 1; }
+    .rank-pts { font-family: var(--pixel); font-size: 0.5rem; color: var(--oro); }
+
+    /* ── WAITLIST ────────────────────────────────────────────── */
+    .waitlist-wrap {
+      background: linear-gradient(135deg, var(--panel) 0%, rgba(255,69,0,0.08) 100%);
+      border: 1px solid var(--borde); padding: 3.5rem 2rem; text-align: center;
+      max-width: 600px; margin: 0 auto;
+    }
+    .waitlist-wrap h2 { margin-bottom: 0.75rem; }
+    .waitlist-wrap p { color: var(--gris); margin-bottom: 2rem; }
+    .form-row { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+    .input-email {
+      flex: 1; min-width: 220px; background: var(--oscuro);
+      border: 1px solid var(--borde); color: var(--blanco);
+      padding: 0.85rem 1rem; font-family: var(--texto); font-size: 1rem;
+      outline: none; transition: border-color 0.2s;
+    }
+    .input-email:focus { border-color: var(--fuego); }
+    .input-email::placeholder { color: var(--gris); }
+    .msg-ok  { margin-top: 1rem; color: var(--oro);   font-family: var(--pixel); font-size: 0.5rem; display: none; }
+    .msg-err { margin-top: 1rem; color: var(--fuego); font-size: 0.85rem; display: none; }
+    .aviso-legal { margin-top: 1rem; color: var(--gris); font-size: 0.75rem; }
+
+    /* ── STORE BADGES ────────────────────────────────────────── */
+    .stores { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 2rem; }
+    .store-badge {
+      display: flex; align-items: center; gap: 0.75rem;
+      background: var(--panel); border: 1px solid var(--borde);
+      padding: 0.75rem 1.5rem; text-decoration: none; color: var(--blanco);
+      transition: border-color 0.2s;
+    }
+    .store-badge:hover { border-color: var(--oro); }
+    .store-badge .store-icon { font-size: 1.8rem; }
+    .store-badge .store-text { font-size: 0.7rem; color: var(--gris); }
+    .store-badge .store-name { font-family: var(--pixel); font-size: 0.5rem; color: var(--blanco); display: block; }
+    .pronto { color: var(--fuego); font-size: 0.65rem; font-family: var(--pixel); letter-spacing: 1px; }
+
+    /* ── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--borde); padding: 2rem 1.5rem;
+      text-align: center; color: var(--gris); font-size: 0.8rem;
+    }
+    footer a { color: var(--gris); text-decoration: underline; }
+    footer a:hover { color: var(--blanco); }
+    .footer-logo { font-family: var(--pixel); font-size: 0.6rem; color: var(--oro); margin-bottom: 0.75rem; }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media(max-width:600px){
+      .stat { min-width: 50%; }
+      nav { padding: 0.75rem 1rem; }
+      .nav-logo { font-size: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo"><span class="crash">CRASH</span> YOUR <span class="cash">CASH</span></span>
+  <a href="#waitlist" class="nav-cta">🔥 AVÍSAME</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="fire-particles" id="particles"></div>
+
+  <div class="badge">PRÓXIMAMENTE EN ANDROID &amp; iOS</div>
+
+  <h1>
+    <span class="crash">CRASH</span><br>
+    <span class="your">YOUR</span><br>
+    <span class="cash">CASH</span>
+  </h1>
+
+  <p class="tagline">
+    La app donde <strong>quemar dinero es un deporte</strong>.<br>
+    Destruye tus Chispas, sube al ranking y vacía tu cuenta con estilo.
+  </p>
+
+  <div class="hero-ctas">
+    <a href="#waitlist" class="btn-primary">🔥 ÚNETE A LA LISTA</a>
+    <a href="#como-funciona" class="btn-secondary">¿Cómo funciona?</a>
+  </div>
+
+  <p class="scroll-hint">▼</p>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <span class="stat-num">3</span>
+    <span class="stat-lbl">Niveles de destrucción</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">2</span>
+    <span class="stat-lbl">Rankings globales</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">∞</span>
+    <span class="stat-lbl">Vanidad disponible</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">0€</span>
+    <span class="stat-lbl">Para empezar</span>
+  </div>
+</div>
+
+<!-- CÓMO FUNCIONA -->
+<section id="como-funciona">
+  <p class="section-label">Mecánica</p>
+  <h2>¿Cómo se <span class="fire">destruye</span> el dinero?</h2>
+  <p class="subtitle">Tres pasos para convertirte en una leyenda de la quema.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-icon">⚡</div>
+      <h3>GENERA CHISPAS</h3>
+      <p>Usa el Generador de Estrés Financiero: un medidor que sube con multiplicador creciente. Asegura antes de que explote o lo pierdes todo.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-icon">🔥</div>
+      <h3>QUÉMALAS CON ESTILO</h3>
+      <p>1.000 Chispas = Hoguera de Bolsillo. 100.000 = Fiesta en el Yate. 1.000.000 = Lanzallamas Divino con animación global.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-icon">🏆</div>
+      <h3>SUBE AL RANKING</h3>
+      <p>Ranking Virtual (para los que grindean) y Ranking Élite (para los que pagan). El logro "Leyenda" si estás en ambos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RANKINGS PREVIEW -->
+<section id="rankings" style="background:var(--oscuro); max-width:100%; padding:5rem 1.5rem;">
+  <div style="max-width:1100px; margin:0 auto;">
+    <p class="section-label">Rankings</p>
+    <h2>¿Quién quema <span class="gold">más</span>?</h2>
+    <p class="subtitle">Dos tablas globales. Una para los astutos, otra para los que tienen demasiado dinero.</p>
+
+    <div class="rankings-wrap">
+      <div class="ranking-card">
+        <div class="ranking-title virtual">🔥 RANKING VIRTUAL</div>
+        <div class="ranking-row"><span class="rank-pos">🥇</span><span class="rank-name">xX_Destructor69_Xx</span><span class="rank-pts">4.7M ✨</span></div>
+        <div class="ranking-row"><span class="rank-pos">🥈</span><span class="rank-name">GrinderPro</span><span class="rank-pts">3.2M ✨</span></div>
+        <div class="ranking-row"><span class="rank-pos">🥉</span><span class="rank-name">ChispaLoca</span><span class="rank-pts">1.8M ✨</span></div>
+        <div class="ranking-row"><span class="rank-pos" style="color:var(--gris)">4</span><span class="rank-name" style="color:var(--gris)">ElInquisidor</span><span class="rank-pts" style="color:var(--gris)">950K ✨</span></div>
+        <div class="ranking-row"><span class="rank-pos" style="color:var(--gris)">5</span><span class="rank-name" style="color:var(--gris)">RuinaTotal</span><span class="rank-pts" style="color:var(--gris)">800K ✨</span></div>
+      </div>
+      <div class="ranking-card elite">
+        <div class="ranking-title elite">💎 RANKING ÉLITE</div>
+        <div class="ranking-row"><span class="rank-pos">🥇</span><span class="rank-name">LaBallena</span><span class="rank-pts">9.5M 💎</span></div>
+        <div class="ranking-row"><span class="rank-pos">🥈</span><span class="rank-name">DiabloFinanciero</span><span class="rank-pts">7.2M 💎</span></div>
+        <div class="ranking-row"><span class="rank-pos">🥉</span><span class="rank-name">WallStreetBurn</span><span class="rank-pts">5.1M 💎</span></div>
+        <div class="ranking-row"><span class="rank-pos" style="color:var(--gris)">4</span><span class="rank-name" style="color:var(--gris)">xX_Destructor69_Xx</span><span class="rank-pts" style="color:var(--gris)">3.8M 💎</span></div>
+        <div class="ranking-row"><span class="rank-pos" style="color:var(--gris)">5</span><span class="rank-name" style="color:var(--gris)">ElMecenas</span><span class="rank-pts" style="color:var(--gris)">2.6M 💎</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section id="waitlist" style="max-width:100%; padding:5rem 1.5rem;">
+  <div class="waitlist-wrap">
+    <p class="section-label" style="text-align:center;">Lista de espera</p>
+    <h2>Sé el primero en <span class="fire">quemar</span></h2>
+    <p>Déjanos tu email y te avisamos el día que salga la app. Cuanto antes entres, antes subes en el ranking.</p>
+
+    <!-- Cambia el action por tu endpoint de Formspree: https://formspree.io/f/XXXXXXXX -->
+    <form id="waitlist-form" action="https://formspree.io/f/mojzvkkv" method="POST">
+      <div class="form-row">
+        <input class="input-email" type="email" name="email" placeholder="tu@email.com" required>
+        <button type="submit" class="btn-primary">🔥 AVÍSAME</button>
+      </div>
+      <p class="msg-ok" id="msg-ok">✅ ¡Apuntado! Te avisamos cuando abramos.</p>
+      <p class="msg-err" id="msg-err">Algo salió mal. Inténtalo de nuevo.</p>
+      <p class="aviso-legal">Sin spam. Solo un email cuando lancemos. <a href="privacidad.html" style="color:var(--gris)">Política de privacidad</a>.</p>
+    </form>
+
+    <div class="stores">
+      <a href="#" class="store-badge">
+        <span class="store-icon">🤖</span>
+        <div>
+          <span class="store-text">Próximamente en</span>
+          <span class="store-name">Google Play</span>
+        </div>
+        <span class="pronto">SOON</span>
+      </a>
+      <a href="#" class="store-badge">
+        <span class="store-icon">🍎</span>
+        <div>
+          <span class="store-text">Próximamente en</span>
+          <span class="store-name">App Store</span>
+        </div>
+        <span class="pronto">SOON</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-logo">CRASH YOUR CASH</p>
+  <p>Una app de entretenimiento y sátira financiera. Las Chispas no tienen valor monetario real.<br>
+     &copy; 2026 Crash your Cash &nbsp;·&nbsp;
+     <a href="privacidad.html">Privacidad</a> &nbsp;·&nbsp;
+     <a href="terminos.html">Términos</a> &nbsp;·&nbsp;
+     <a href="mailto:hola@crashyourcash.app">Contacto</a>
+  </p>
+</footer>
+
+<script>
+  // Partículas de fuego
+  (function() {
+    var container = document.getElementById('particles');
+    var colors = ['#FF4500','#FF6B00','#FFD700','#FF8C00'];
+    for (var i = 0; i < 40; i++) {
+      var p = document.createElement('div');
+      p.className = 'particle';
+      var size = Math.random() * 5 + 2;
+      p.style.cssText = [
+        'left:' + Math.random()*100 + '%',
+        'width:' + size + 'px',
+        'height:' + size + 'px',
+        'background:' + colors[Math.floor(Math.random()*colors.length)],
+        'animation-duration:' + (Math.random()*6+4) + 's',
+        'animation-delay:' + (Math.random()*8) + 's',
+      ].join(';');
+      container.appendChild(p);
+    }
+  })();
+
+  // Formulario Formspree AJAX
+  var form = document.getElementById('waitlist-form');
+  var msgOk  = document.getElementById('msg-ok');
+  var msgErr = document.getElementById('msg-err');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var data = new FormData(form);
+    fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(function(r) {
+      if (r.ok) {
+        msgOk.style.display = 'block';
+        msgErr.style.display = 'none';
+        form.reset();
+      } else {
+        msgErr.style.display = 'block';
+      }
+    }).catch(function() {
+      msgErr.style.display = 'block';
+    });
+  });
+</script>
+</body>
+</html>
